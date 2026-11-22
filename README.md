@@ -1,3 +1,15 @@
+# simplewall — experimental window picker
+
+Unofficial experimental fork based on simplewall 3.9. Original project: [henrypp/simplewall](https://github.com/henrypp/simplewall). The original GPL-3.0 license and attribution are preserved.
+
+**This is experimental source, not an official release or a fully validated firewall build.**
+
+The toolbar button **Pencereden seç** (Select from window) lets you click an open application's window and open simplewall's existing Allow / Block notification without waiting for a network event. Selecting a window does not grant access; the decision is made in the notification. Esc or right-click cancels selection.
+
+See [EXPERIMENTAL.md](EXPERIMENTAL.md) for build instructions, limitations, tests and source provenance. New interface strings are currently Turkish. The upstream documentation below describes the original project; its release links point to upstream binaries without this feature.
+
+---
+
 <h1 align="center">simplewall</h1>
 
 <p align="center">

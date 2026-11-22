@@ -306,6 +306,8 @@ VOID _app_notify_show (
 		return;
 	}
 
+	_app_notify_getcontext (hwnd)->is_manual = ptr_log->is_manual;
+
 	// set notification information
 	_app_notify_setapp_id (hwnd, ptr_log->app_hash);
 	_app_notify_setapp_icon (hwnd, NULL);
@@ -386,8 +388,21 @@ VOID _app_notify_show (
 
 	InvalidateRect (hwnd, NULL, TRUE);
 
-	// query busy information
-	_app_notify_queueinfo (hwnd, ptr_log);
+	// A manually selected window has no captured IP address or port.
+	if (ptr_log->is_manual)
+	{
+		_r_ctrl_setstring (hwnd, 0, L"Elle eri\u015fim iste\u011fi - simplewall");
+		_r_ctrl_setstring (hwnd, IDC_SIGNATURE_TEXT, L"-");
+		_r_ctrl_setstring (hwnd, IDC_ADDRESS_TEXT, L"Ba\u011flant\u0131 denemesi beklenmiyor");
+		_r_ctrl_setstring (hwnd, IDC_HOST_TEXT, _r_obj_getstring (ptr_app->real_path));
+		_r_ctrl_setstring (hwnd, IDC_PORT_TEXT, L"-");
+		_r_ctrl_setstring (hwnd, IDC_DIRECTION_TEXT, L"Uygulama eri\u015fimi");
+		_app_notify_setapp_icon (hwnd, _app_icons_getsafeapp_hicon (ptr_log->app_hash));
+	}
+	else
+	{
+		_app_notify_queueinfo (hwnd, ptr_log);
+	}
 
 	if (string)
 		_r_obj_dereference (string);
@@ -889,7 +904,7 @@ INT_PTR CALLBACK NotificationProc (
 			if (wparam != GENERAL_ID)
 				break;
 
-			_r_ctrl_enable (hwnd, IDC_RULES_BTN, TRUE);
+			_r_ctrl_enable (hwnd, IDC_RULES_BTN, !_app_notify_getcontext (hwnd)->is_manual);
 			_r_ctrl_enable (hwnd, IDC_KILLPROCESS_BTN, TRUE);
 			_r_ctrl_enable (hwnd, IDC_ALLOW_BTN, TRUE);
 			_r_ctrl_enable (hwnd, IDC_BLOCK_BTN, TRUE);
@@ -1167,6 +1182,12 @@ INT_PTR CALLBACK NotificationProc (
 		case WM_COMMAND:
 		{
 			INT ctrl_id = LOWORD (wparam);
+
+			// Never construct address rules from a manual prompt.
+			if (_app_notify_getcontext (hwnd)->is_manual &&
+				(ctrl_id == IDC_RULES_BTN || ctrl_id == IDM_OPENRULESEDITOR ||
+				(ctrl_id >= IDX_RULES_SPECIAL && ctrl_id <= IDX_RULES_SPECIAL + (INT)(INT_PTR)_r_obj_getlistsize (rules_list) + 1)))
+				return FALSE;
 
 			if (ctrl_id >= IDX_RULES_SPECIAL && ctrl_id <= IDX_RULES_SPECIAL + (INT)(INT_PTR)_r_obj_getlistsize (rules_list) + 1)
 			{

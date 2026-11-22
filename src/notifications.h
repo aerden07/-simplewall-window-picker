@@ -20,6 +20,7 @@ typedef struct _NOTIFY_CONTEXT
 	HICON hicon;
 
 	ULONG app_hash;
+	BOOLEAN is_manual;
 } NOTIFY_CONTEXT, *PNOTIFY_CONTEXT;
 
 _Ret_maybenull_

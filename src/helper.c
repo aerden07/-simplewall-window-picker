@@ -1832,7 +1832,8 @@ VOID NTAPI _app_queue_notifyinformation (
 
 	if (_r_wnd_isvisible (context->hwnd, FALSE))
 	{
-		if (ptr_log->app_hash == _app_notify_getapp_id (context->hwnd))
+		if (ptr_log->app_hash == _app_notify_getapp_id (context->hwnd) &&
+			!_app_notify_getcontext (context->hwnd)->is_manual)
 		{
 			// set file icon
 			_app_notify_setapp_icon (context->hwnd, hicon);

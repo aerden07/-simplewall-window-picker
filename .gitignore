@@ -39,3 +39,11 @@ desktop.ini
 *.tlog
 
 *PVS-Studio*
+
+# Local profiles and diagnostics must never be published
+profile*.xml
+simplewall.ini
+*.dmp
+*.bak
+*.test.txt
+outputs/

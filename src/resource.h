@@ -300,6 +300,7 @@
 #define IDM_ZOOM 333
 #define IDM_TAB_NEXT 334
 #define IDM_TAB_PREV 335
+#define IDM_PICK_WINDOW 336
 
 #define IDX_LANGUAGE 1000
 #define IDX_TIMER 1200

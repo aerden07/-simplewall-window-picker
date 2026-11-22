@@ -284,6 +284,7 @@ typedef struct _ITEM_LOG
 	UINT16 local_port;
 	UINT8 protocol;
 
+	BOOLEAN is_manual; // User-requested application prompt; no connection data.
 	BOOLEAN is_myprovider;
 	BOOLEAN is_blocklist;
 	BOOLEAN is_loopback;

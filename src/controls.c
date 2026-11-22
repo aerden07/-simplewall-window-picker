@@ -842,6 +842,7 @@ VOID _app_toolbar_init (
 		_r_toolbar_setimagelist (config.htoolbar, 0, config.himg_toolbar);
 
 		_r_toolbar_addbutton (config.hrebar, IDC_TOOLBAR, IDM_TRAY_START, BTNS_BUTTON | BTNS_AUTOSIZE, NULL, TBSTATE_ENABLED, I_IMAGENONE);
+		_r_toolbar_addbutton (config.hrebar, IDC_TOOLBAR, IDM_PICK_WINDOW, BTNS_BUTTON | BTNS_AUTOSIZE | BTNS_SHOWTEXT, L"Pencereden se\u00e7", TBSTATE_ENABLED, I_IMAGENONE);
 		_r_toolbar_addseparator (config.hrebar, IDC_TOOLBAR);
 		_r_toolbar_addbutton (config.hrebar, IDC_TOOLBAR, IDM_OPENRULESEDITOR, BTNS_BUTTON | BTNS_AUTOSIZE, NULL, TBSTATE_ENABLED, 8);
 		_r_toolbar_addseparator (config.hrebar, IDC_TOOLBAR);

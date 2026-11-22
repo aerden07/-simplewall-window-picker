@@ -2,6 +2,10 @@
 // Copyright (c) 2016-2026 Henry++
 
 #include "global.h"
+#include "window_picker.h"
+#if defined(SW_COMPAT_SELFTEST)
+#include "../tools/public-sdk/selftest.h"
+#endif
 
 BOOLEAN _app_changefilters (
 	_In_ HWND hwnd,
@@ -2728,8 +2732,19 @@ INT_PTR CALLBACK DlgProc (
 
 			switch (ctrl_id)
 			{
+				case IDM_PICK_WINDOW:
+				{
+					_app_window_picker_begin (hwnd);
+					break;
+				}
+
 				case IDCANCEL: // process Esc key
 				{
+					if (window_picker_active)
+					{
+						_app_window_picker_cancel (hwnd);
+						break;
+					}
 					if (GetFocus () == config.hsearchbar)
 					{
 						_r_ctrl_setstring (config.hsearchbar, 0, L"");
@@ -3541,6 +3556,10 @@ INT APIENTRY wWinMain (
 )
 {
 	HWND hwnd;
+
+#if defined(SW_COMPAT_SELFTEST)
+	return sw_compat_selftest ();
+#endif
 
 	if (!_r_app_initialize (&_app_parseargs))
 		return ERROR_APP_INIT_FAILURE;
